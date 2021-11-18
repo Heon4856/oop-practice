@@ -1,18 +1,24 @@
-# 거리를 근거로 메기기.
-class BasePricing:
-    def __init__(self,name, basic_rate,per_minute_rate):
-        self.name = name
-        self.basic_rate = basic_rate
-        self.per_minute_rate = per_minute_rate
-
-    def calculate_fee(self, minute: int)-> int:
-        return self.basic_rate + minute*self.per_minute_rate
+from abc import ABC, abstractmethod
 
 
+class BasePricing(ABC):
+    @property
+    def basic_rate(self):
+        return f"basic_rate = {self._basic_rate}"
+
+    @basic_rate.setter
+    def basic_rate(self):
+        return self._basic_rate
+
+    @property
+    def per_minute_rate(self):
+        return f"per_minute_rate = {self._per_minute_rate}"
+
+    @per_minute_rate.setter
+    def per_minute_rate(self):
+        return self._per_minute_rate
 
 
-
-
-
-
-
+    @abstractmethod
+    def calculate_fee(self):
+        pass
