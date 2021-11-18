@@ -1,20 +1,16 @@
-from const import KUNKOOK_PRICE,KUNKOOK_NAME,KUNKOOK_EXTRA_CHARGE
-
+# 거리를 근거로 메기기.
 class BasePricing:
-    def __init__(self,name, base_price, extra_minute_price):
+    def __init__(self,name, basic_rate,per_minute_rate):
         self.name = name
-        self.base_price = base_price
-        self.extra_minute_price = extra_minute_price
+        self.basic_rate = basic_rate
+        self.per_minute_rate = per_minute_rate
 
-    def __str__(self):
-        return str({"name" : f'{self.name}',
-                "base": f'{self.base_price}',
-                "extra": f'{self.extra_minute_price}'})
+    def calculate_fee(self, minute: int)-> int:
+        return self.basic_rate + minute*self.per_minute_rate
 
 
 
 
-kunkook = BasePricing(KUNKOOK_NAME, KUNKOOK_PRICE, KUNKOOK_EXTRA_CHARGE)
 
 
 
