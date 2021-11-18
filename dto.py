@@ -1,5 +1,7 @@
 from datetime import datetime
 from typing import List
+
+
 class User:
     use_deer_name: str
     use_end_lat: float
@@ -13,12 +15,14 @@ class Deer:
     deer_name: str
     deer_area_id: int
 
+
 class Area:
     area_id: int
     area_bounday: List[tuple]
-    #실제는 폴리곤타입이라고 함.
+    # 실제는 폴리곤타입이라고 함.
     area_center: tuple
     area_coords: List[tuple]
+
 
 class ParkingZone:
     parkingzone_id: int
