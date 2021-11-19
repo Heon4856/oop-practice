@@ -1,4 +1,4 @@
-from policy_checker.check_policy_Impl import CheckPolicy
+from policy_checker.check_policy_impl import CheckPolicy
 
 
 class CostCalculator:
