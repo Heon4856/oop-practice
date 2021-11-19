@@ -8,7 +8,6 @@ class ParkingZoneDiscount(BaseDiscount):
     def calculate_discount_amount(self, user: User)->int:
         before_discount = self.basic_rate + self.per_minute_rate * (user.use_end_at - user.use_start_at)
         self.before_discount = before_discount
-        print(before_discount)
         self.discount_amount = before_discount * PARKING_ZONE_DISCOUNT_RATE
         return self.discount_amount
 
