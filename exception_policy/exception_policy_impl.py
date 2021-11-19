@@ -2,7 +2,7 @@ from exception_policy_interface import BaseException
 
 class QuickReturnPolicy(BaseException):
 
-    def exception_change_amount(self,before_fare: int):
+    def calculate_exception_change_amount(self,before_fare: int):
         return before_fare
 
 
