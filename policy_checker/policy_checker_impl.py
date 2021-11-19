@@ -21,19 +21,19 @@ class CheckPolicy(PolicyChecker):
     def discount_policy(self, deer_area_id, user: User):
         discount_policies = []
         parkingzone = find_parking_zone()
-        user_coods = (User.use_end_lng, User.use_end_lat)
+        user_coods = (user.use_end_lng, user.use_end_lat)
         parkingzone_coods = (parkingzone.parkingzone_center_lng, parkingzone.parkingzone_center_lat)
         if parkingzone.parkingzone_radius < calculate_distance(user_coods, parkingzone_coods):
             discount_policies.append(ParkingZoneDiscount)
 
-        if User.use_start_at - find_user_last_use() < REUSE_TIMEDELTA:
+        if user.use_start_at - find_user_last_use() < REUSE_TIMEDELTA:
             discount_policies.append(EarlyReuseDiscount)
 
         return discount_policies
 
     def extra_charge_policy(self, deer_area_id, user: User):
         extra_charge_policies = []
-        user_coods = (User.use_end_lng, User.use_end_lat)
+        user_coods = (user.use_end_lng, user.use_end_lat)
         area = find_area_info(deer_area_id)
         if user_coods not in area.area_coords:
             extra_charge_policies.append(OutsideDistrict)
@@ -52,4 +52,4 @@ class CheckPolicy(PolicyChecker):
         self.base_policy = self.base_policy(deer_area_id)
         self.discount_policy = self.discount_policy(deer_area_id, user)
         self.extra_charge_policy = self.extra_charge_policy(deer_area_id, user)
-        self.exception_policy = self.exception_policy(deer_area_id, user)
+        self.exception_policy = self.exception_policy(user)

@@ -32,7 +32,7 @@ def find_user_last_use():
 
 def find_forbidden_area():
     forbidden = ForbiddenArea()
-    forbidden.id = 1
-    forbidden.area_boundary = [(5, 5)]
-    forbidden.area_coords = [(5, 5)]
+    forbidden.forbidden_area_id = 1
+    forbidden.forbidden_area_boundary = [(5, 5)]
+    forbidden.forbidden_area_coords = [(5, 5)]
     return forbidden
