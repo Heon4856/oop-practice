@@ -5,7 +5,7 @@ class BaseDiscount(ABC):
 
     @property
     def basic_rate(self):
-        return f"basic_rate = {self._basic_rate}"
+        return self._basic_rate
 
     @basic_rate.setter
     def basic_rate(self):
@@ -13,15 +13,14 @@ class BaseDiscount(ABC):
 
     @property
     def per_minute_rate(self):
-        return f"per_minute_rate = {self._per_minute_rate}"
+        return self._per_minute_rate
 
     @per_minute_rate.setter
     def per_minute_rate(self):
         return self._per_minute_rate
 
-    @property
     @abstractmethod
-    def discount_amount(self, user):
+    def calculate_discount_amount(self, user):
         pass
 
 
