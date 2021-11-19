@@ -1,4 +1,4 @@
-from discount_policy_interface import BaseDiscount
+from discount_policy.discount_policy_interface import BaseDiscount
 from dto import User
 from const import PARKING_ZONE_DISCOUNT_RATE
 

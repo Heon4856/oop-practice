@@ -1,4 +1,4 @@
-from extra_charge_policy_interface import BaseExtraCharge
+from extra_charge_policy.extra_charge_policy_interface import BaseExtraCharge
 from dto import User, Deer, Area
 from const import OUTSIDE_CHARGE, FORBIDDEN_DISTRICT_CHARGE
 from mock_db import find_deer_info, find_area_info

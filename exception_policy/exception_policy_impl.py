@@ -1,4 +1,4 @@
-from exception_policy_interface import BaseException
+from exception_policy.exception_policy_interface import BaseException
 
 class QuickReturnPolicy(BaseException):
 
