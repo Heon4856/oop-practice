@@ -10,19 +10,19 @@ class PolicyChecker(ABC):
 
     @property
     @abstractmethod
-    def discount_policy(base_charge, deer_area_id, user):
+    def discount_policy(base_charge, deer_area_id, user: User):
         pass
 
 
     @property
     @abstractmethod
-    def extra_charge_policy(discounted_charge, deer_area_id, user):
+    def extra_charge_policy(discounted_charge, deer_area_id, user: User):
         pass
 
 
     @property
     @abstractmethod
-    def exception_policy(extra_charged_price, deer_area_id, user):
+    def exception_policy(extra_charged_price, deer_area_id, user: User):
         pass
 
 

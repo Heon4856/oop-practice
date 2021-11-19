@@ -10,21 +10,21 @@ class CostCalculator:
 
     def calculate(self):
         base_policy = self.charging_policy.base_policy
-        charge_calculating = base_policy.calculate_fee(self.user.use_end_at - self.user.use_start_at )
+        charge_calculating: int = base_policy.calculate_fee(self.user.use_end_at - self.user.use_start_at )
 
         discount_polices = self.charging_policy.discount_policy
 
         for policy in discount_polices:
-            charge_calculating = policy.calculate_fee(self.user)
+            charge_calculating: int = policy.calculate_fee(self.user)
 
 
-        extra_charged_policies = self.charging_policy.extra_charge_policy
+        extra_charged_policies: list = self.charging_policy.extra_charge_policy
         for policy in extra_charged_policies:
-            charge_calculating = policy.calculate_fee(charge_calculating)
+            charge_calculating: int = policy.calculate_fee(charge_calculating)
 
 
         if self.charging_policy.exception_policy:
-            charge_calculating = self.charging_policy.exception_policy.calculate_exception(charge_calculating)
+            charge_calculating: int = self.charging_policy.exception_policy.calculate_exception(charge_calculating)
 
         return charge_calculating
 

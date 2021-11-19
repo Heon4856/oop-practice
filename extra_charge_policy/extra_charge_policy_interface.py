@@ -18,7 +18,7 @@ class BaseExtraCharge(ABC):
 
 
     @abstractmethod
-    def calculate_after_extra_charge(self, before_fare):
+    def calculate_after_extra_charge(self, before_fare: int):
         pass
 
 

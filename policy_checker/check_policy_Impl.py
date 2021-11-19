@@ -31,7 +31,7 @@ class CheckPolicy(PolicyChecker):
 
         return discount_policies
 
-    def extra_charge_policy(self, deer_area_id, user):
+    def extra_charge_policy(self, deer_area_id, user: User):
         extra_charge_policies = []
         user_coods = (User.use_end_lng, User.use_end_lat)
         area = find_area_info(deer_area_id)

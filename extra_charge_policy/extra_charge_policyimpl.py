@@ -12,7 +12,7 @@ class OutsideDistrict(BaseExtraCharge):
         area: Area = find_area_info(deer.deer_area_id)
         return calculate_distance(coords, area.area_bounday) * OUTSIDE_CHARGE
 
-    def calculate_after_extra_charge(self, before_fare):
+    def calculate_after_extra_charge(self, before_fare: int ):
         return before_fare - self.extra_charge_amount
 
 
@@ -20,7 +20,7 @@ class AtForbiddenDistrict:
     def extra_charge_amount(self):
         return FORBIDDEN_DISTRICT_CHARGE
 
-    def calculate_after_extra_charge(self, before_fare):
+    def calculate_after_extra_charge(self, before_fare: int):
         return before_fare - self.extra_charge_amount
 
 
