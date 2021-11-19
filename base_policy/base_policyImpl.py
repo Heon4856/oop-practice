@@ -1,4 +1,4 @@
-from base_policy import BasePricing
+from base_policy_interface import BasePricing
 
 class BasePricingImpl(BasePricing):
     def calculate_fee(self, minute: int)-> int:

@@ -1,7 +1,9 @@
-base = {1: {
+from datetime import timedelta
+
+base_policy_const = {1: {
     "NAME"                : "건국",
-    "PRICE"               : 790,
-    "EXTRA_CHARGE": 150}
+    "basic_rate"               : 790,
+    "per_minute_rate": 150}
 }
 
 PARKING_ZONE_DISCOUNT_RATE = 0.3
@@ -9,3 +11,7 @@ PARKING_ZONE_DISCOUNT_RATE = 0.3
 OUTSIDE_CHARGE = 300
 
 FORBIDDEN_DISTRICT_CHARGE = 6000
+
+REUSE_TIMEDELTA = timedelta(minutes=30)
+
+EXCEIPTION_TIMEDELTA = timedelta(minutes=1)

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from dto import User
 
-class BaseExtraCharge(ABC):
+class BaseException(ABC):
 
     @property
     def basic_rate(self):
@@ -19,14 +19,23 @@ class BaseExtraCharge(ABC):
     def per_minute_rate(self):
         return self._per_minute_rate
 
+
+    @property
+    def user(self):
+        return f"per_minute_rate = {self._user}"
+
+    @user.setter
+    def per_minute_rate(self):
+        return self._user
+
     @property
     @abstractmethod
-    def extra_charge_amount(self,user: User):
+    def exception_change_amount(self):
         pass
 
 
     @abstractmethod
-    def calculate_after_extra_charge(self, before_fare):
+    def calculate_exception(self, before_fare):
         pass
 
 
