@@ -17,7 +17,6 @@ class ParkingZoneDiscount(BaseDiscount):
 class EarlyReuseDiscount(BaseDiscount):
 
     def calculate_discount_amount(self, user: User) -> int:
-        print(self.basic_rate)
         return self.basic_rate
 
     def calculate_after_discount(self, user: User, before_fare: int) -> int:

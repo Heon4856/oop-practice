@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+
 base_policy_const = {1: {
     "NAME"                : "건국",
     "basic_rate"               : 790,
@@ -15,3 +16,6 @@ FORBIDDEN_DISTRICT_CHARGE = 6000
 REUSE_TIMEDELTA = timedelta(minutes=30)
 
 EXCEIPTION_TIMEDELTA = timedelta(minutes=1)
+
+
+
