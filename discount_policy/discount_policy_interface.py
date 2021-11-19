@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from dto import User
 
 
 class BaseDiscount(ABC):
@@ -8,25 +9,21 @@ class BaseDiscount(ABC):
         return self._basic_rate
 
     @basic_rate.setter
-    def basic_rate(self):
-        return self._basic_rate
+    def basic_rate(self, new_basic_rate):
+        self._basic_rate = new_basic_rate
 
     @property
     def per_minute_rate(self):
         return self._per_minute_rate
 
     @per_minute_rate.setter
-    def per_minute_rate(self):
-        return self._per_minute_rate
+    def per_minute_rate(self,new_per_minute_rate):
+        self._per_minute_rate =new_per_minute_rate
 
     @abstractmethod
     def calculate_discount_amount(self, user):
         pass
 
-
     @abstractmethod
-    def calculate_after_discount(self):
+    def calculate_after_discount(self, user: User, before_fare: int):
         pass
-
-
-

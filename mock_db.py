@@ -11,7 +11,7 @@ def find_deer_info(use_deer_name):
 def find_area_info(area_id):
     area = Area()
     area.id = 1
-    area.area_boundary = [(5, 5)]
+    area.area_boundary = (5, 5)
     area.area_center = [(2.5, 2.5)]
     area.area_coords = [(5, 5)]
     return area

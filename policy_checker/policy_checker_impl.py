@@ -1,4 +1,4 @@
-from policy_checker_interface import PolicyChecker
+from policy_checker.policy_checker_interface import PolicyChecker
 from const import base_policy_const
 from base_policy.base_policy_impl import BasePricingImpl
 from dto import User
@@ -24,10 +24,16 @@ class CheckPolicy(PolicyChecker):
         user_coods = (user.use_end_lng, user.use_end_lat)
         parkingzone_coods = (parkingzone.parkingzone_center_lng, parkingzone.parkingzone_center_lat)
         if parkingzone.parkingzone_radius < calculate_distance(user_coods, parkingzone_coods):
-            discount_policies.append(ParkingZoneDiscount)
+            parkingzone_policy = ParkingZoneDiscount()
+            parkingzone_policy.basic_rate = base_policy_const[deer_area_id]["basic_rate"]
+            parkingzone_policy.per_minute_rate = base_policy_const[deer_area_id]["per_minute_rate"]
+            discount_policies.append(parkingzone_policy)
 
         if user.use_start_at - find_user_last_use() < REUSE_TIMEDELTA:
-            discount_policies.append(EarlyReuseDiscount)
+            early_reuse_policy = EarlyReuseDiscount()
+            early_reuse_policy.basic_rate = base_policy_const[deer_area_id]["basic_rate"]
+            early_reuse_policy.per_minute_rate = base_policy_const[deer_area_id]["per_minute_rate"]
+            discount_policies.append(early_reuse_policy)
 
         return discount_policies
 

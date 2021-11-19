@@ -3,7 +3,6 @@ from dto import User
 
 class BaseExtraCharge(ABC):
 
-    @property
     @abstractmethod
     def calculate_extra_charge_amount(self,user):
         pass
