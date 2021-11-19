@@ -6,11 +6,12 @@ from utils import calculate_distance
 
 
 class OutsideDistrict(BaseExtraCharge):
-    def extra_charge_amount(self ):
-        coords = (self.user.use_end_lat, self.user.use_end_lng)
-        deer: Deer = find_deer_info(self.user.use_deer_name)
+    def calculate_extra_charge_amount(self ,user: User):
+        coords = (user.use_end_lat, user.use_end_lng)
+        deer: Deer = find_deer_info(user.use_deer_name)
         area: Area = find_area_info(deer.deer_area_id)
-        return calculate_distance(coords, area.area_bounday) * OUTSIDE_CHARGE
+        self.extra_charge_amount =  calculate_distance(coords, area.area_bounday) * OUTSIDE_CHARGE
+        return self.extra_charge_amount
 
     def calculate_after_extra_charge(self, before_fare: int ):
         return before_fare - self.extra_charge_amount
