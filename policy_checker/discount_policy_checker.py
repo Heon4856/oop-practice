@@ -14,5 +14,4 @@ class DiscountPolicyCheckerImplement(PolicyChecker):
             if policy.policy_check(policy, user):
                 discount_policy_for_user.append(policy)
 
-        print( self.discount_policies)
         return discount_policy_for_user

@@ -34,7 +34,7 @@ class EarlyReuseDiscount(BaseDiscount):
         return self.basic_rate
 
     def calculate_after_discount(self, user: User, before_fare: int) -> int:
-        return before_fare - self.calculate_discount_amount(user )
+        return before_fare - self.calculate_discount_amount(self, user )
 
     def policy_check(self, user: User) -> bool:
         if user.use_start_at - find_user_last_use() < REUSE_TIMEDELTA:

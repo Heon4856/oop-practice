@@ -15,7 +15,7 @@ class OutsideDistrict(BaseExtraCharge):
         return self.extra_charge_amount
 
     def calculate_after_extra_charge(self, user: User, before_fare: int):
-        return before_fare - self.calculate_extra_charge_amount(self,user)
+        return before_fare + self.calculate_extra_charge_amount(self,user)
 
 
     def policy_check(self, user: User) -> bool:
@@ -32,7 +32,7 @@ class AtForbiddenDistrict:
         return FORBIDDEN_DISTRICT_CHARGE
 
     def calculate_after_extra_charge(self, user: User, before_fare: int):
-        return before_fare - self.calculate_extra_charge_amount(self, user)
+        return before_fare + self.calculate_extra_charge_amount(self, user)
 
 
     def policy_check(self, user: User) -> bool:
