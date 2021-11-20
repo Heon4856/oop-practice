@@ -1,7 +1,13 @@
 import abc
 import inspect
 from functools import wraps
-from policy_checker.policy_checker_impl import PolicyCheckerImplement
+
+from base_policy.base_policy_impl import BasePricingImpl
+from base_policy.base_policy_interface import BasePricing
+from discount_policy.discount_policy_impl import ParkingZoneDiscount, EarlyReuseDiscount
+from discount_policy.discount_policy_interface import BaseDiscount
+from policy_checker.base_policy_checker import PolicyCheckerImplement
+from policy_checker.discount_policy_checker import DiscountPolicyCheckerImplement
 from policy_checker.policy_checker_interface import PolicyChecker
 
 
@@ -18,34 +24,27 @@ class MySQLRepo(Repo):
         print('MySQLRepo')
 
 
-# providers = {
-#     Repo: MySQLRepo
-# }
-
+providers = {
+        PolicyChecker: DiscountPolicyCheckerImplement,
+        BasePricing : BasePricingImpl,
+        BaseDiscount : ParkingZoneDiscount
+    }
 
 def inject(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         annotations = inspect.getfullargspec(func).annotations
+        print(annotations)
         for k, v in annotations.items():
             if v in providers:
                 kwargs[k] = providers[v]
-
+        print(args)
+        print(kwargs)
         return func(*args, **kwargs)
 
     return wrapper
 
 
-class Usecase:
-    @inject
-    def __init__(self, abc: int, repo: Repo):
-        self.age = abc
-        self.repo = repo
-
-
-providers = {
-        PolicyChecker: PolicyCheckerImplement,
-    }
 
 
 

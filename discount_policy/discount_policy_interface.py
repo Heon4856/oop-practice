@@ -27,3 +27,7 @@ class BaseDiscount(ABC):
     @abstractmethod
     def calculate_after_discount(self, user: User, before_fare: int):
         pass
+
+    @abstractmethod
+    def policy_check(self, user: User):
+        pass

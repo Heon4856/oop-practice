@@ -13,6 +13,7 @@ providers = {
 def inject2(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
+        print(func)
         annotations = inspect.getfullargspec(func).annotations
         for k, v in annotations.items():
             if v in providers:
