@@ -13,4 +13,6 @@ class BaseExtraCharge(ABC):
         pass
 
 
-
+    @abstractmethod
+    def policy_check(self, user: User):
+        pass

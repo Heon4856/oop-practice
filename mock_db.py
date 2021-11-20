@@ -36,3 +36,7 @@ def find_forbidden_area():
     forbidden.forbidden_area_boundary = [(5, 5)]
     forbidden.forbidden_area_coords = [(5, 5)]
     return forbidden
+
+
+def find_base_pricing():
+    return True

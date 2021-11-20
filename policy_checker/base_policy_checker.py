@@ -11,7 +11,17 @@ from base_policy.base_policy_interface import BasePricing
 
 
 class PolicyCheckerImplement(PolicyChecker):
-    def base_policy(self, deer_area_id:int, base_pricing:BasePricing ):
-        base_pricing.basic_rate = base_policy_const[deer_area_id]["basic_rate"]
-        base_pricing.per_minute_rate = base_policy_const[deer_area_id]["per_minute_rate"]
-        return base_pricing
+
+
+
+    def __init__(self, base_discounts: List[BaseDiscount]):
+        self.discount_policies = base_discounts
+
+
+    def policy_check(self, user:User):
+        discount_policy_for_user = []
+        for policy in self.discount_policies:
+            if policy.policy_check(policy, user):
+                discount_policy_for_user.append(policy)
+
+        return discount_policy_for_user

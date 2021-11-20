@@ -1,35 +1,39 @@
-from policy_checker.policy_checker_interface import PolicyChecker
 from base_policy.base_policy_interface import BasePricing
-from injectors.decorators import inject
+from exception_policy.exception_policy_interface import BaseException
+from extra_charge_policy.extra_charge_policy_interface import BaseExtraCharge
+from policy_checker.policy_checker_interface import PolicyChecker
+from injectors.decorators import inject_for_policy_check
+from typing import List
+from discount_policy.discount_policy_interface import BaseDiscount
 
 
 class CostCalculator:
-    @inject
-    def __init__(self, user, policyChecker: PolicyChecker, basePricing : BasePricing) :
+    @inject_for_policy_check
+    def __init__(self, user, policyChecker: PolicyChecker, base_discounts: List[BaseDiscount],
+                 base_extra_charges: List[BaseExtraCharge], base_exceptions: List[BaseException],
+                 base_pricings: List[BasePricing]):
+
+        self.BaseExtraCharge = BaseExtraCharge
         self.user = user
         self.deer_area_id = 1
         self.charging_policy = policyChecker
-        self.basePricing = basePricing
+        self.base_discounts = base_discounts
+        self.base_extra_charges = base_extra_charges
+        self.base_exceptions = base_exceptions
+        self.base_pricings = base_pricings
 
     def calculate(self):
-        base_policy = self.charging_policy.base_policy(PolicyChecker, self.deer_area_id, self.basePricing)
-        print(base_policy.basic_rate, base_policy.per_minute_rate)
-        charge_calculating: int = base_policy.calculate_fee(base_policy, self.user.use_end_at - self.user.use_start_at)
+        base_discount = self.charging_policy(self.base_discounts)
+        base_extra_charges = self.charging_policy(self.base_extra_charges)
+        base_exception = self.charging_policy(self.base_exceptions)
+        base_pricing = self.charging_policy(self.base_pricings)
 
-        discount_polices = self.charging_policy.discount_policy(self, self.deer_area_id, self.user)
-        print(discount_polices)
+        print(base_discount.policy_check(self.user))
+        print(base_extra_charges.policy_check(self.user))
+        print(base_exception.policy_check(self.user))
+        print(base_pricing.policy_check(self.user))
 
-        for policy in discount_polices:
-            charge_calculating: int = policy.calculate_after_discount(self.user, charge_calculating)
-
-        extra_charged_policies: list = self.charging_policy.extra_charge_policy(self, self.deer_area_id, self.user)
-        for policy in extra_charged_policies:
-            charge_calculating: int = policy.calculate_after_extra_charge(policy, self.user, charge_calculating)
-
-        if self.charging_policy.exception_policy(self, self.user):
-            charge_calculating: int = self.charging_policy.exception_policy.calculate_exception(charge_calculating)
-
-        return charge_calculating
+        return base_exception
 
 
 if __name__ == "__main__":
@@ -43,5 +47,4 @@ if __name__ == "__main__":
     user.use_start_at = datetime.datetime.now()
     user.use_end_at = datetime.datetime.now() + datetime.timedelta(minutes=10)
     costCalculator = CostCalculator(user)
-    print(costCalculator.charging_policy)
     print(costCalculator.calculate())

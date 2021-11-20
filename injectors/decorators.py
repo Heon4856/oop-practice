@@ -1,56 +1,59 @@
 import abc
 import inspect
 from functools import wraps
-
-from base_policy.base_policy_impl import BasePricingImpl
-from base_policy.base_policy_interface import BasePricing
-from discount_policy.discount_policy_impl import ParkingZoneDiscount, EarlyReuseDiscount
-from discount_policy.discount_policy_interface import BaseDiscount
-from policy_checker.base_policy_checker import PolicyCheckerImplement
-from policy_checker.discount_policy_checker import DiscountPolicyCheckerImplement
-from policy_checker.policy_checker_interface import PolicyChecker
+from typing import List
 
 
-class Repo:
-    __metaclass__ = abc.ABCMeta
 
-    @abc.abstractmethod
-    def get(self):
-        pass
+def inject_for_policy_check(func):
 
+    from policy_checker.discount_policy_checker import DiscountPolicyCheckerImplement
+    from policy_checker.policy_checker_interface import PolicyChecker
+    from discount_policy.discount_policy_impl import ParkingZoneDiscount, EarlyReuseDiscount
+    from discount_policy.discount_policy_interface import BaseDiscount
+    from extra_charge_policy.extra_charge_policy_interface import BaseExtraCharge
+    from extra_charge_policy.extra_charge_policy_impl import OutsideDistrict
+    from extra_charge_policy.extra_charge_policy_impl import AtForbiddenDistrict
+    from exception_policy.exception_policy_interface import BaseException
+    from exception_policy.exception_policy_impl import QuickReturnPolicy
 
-class MySQLRepo(Repo):
-    def get(self):
-        print('MySQLRepo')
-
-
-providers = {
+    from base_policy.base_policy_interface import BasePricing
+    from base_policy.base_policy_impl import BasePricingImpl
+    providers = {
         PolicyChecker: DiscountPolicyCheckerImplement,
-        BasePricing : BasePricingImpl,
-        BaseDiscount : ParkingZoneDiscount
+        List[BaseDiscount]: [ParkingZoneDiscount, EarlyReuseDiscount],
+        List[BaseExtraCharge] : [OutsideDistrict, AtForbiddenDistrict],
+        List[BaseException] : [ QuickReturnPolicy],
+        List[BasePricing] : [BasePricingImpl]
     }
 
-def inject(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         annotations = inspect.getfullargspec(func).annotations
-        print(annotations)
         for k, v in annotations.items():
             if v in providers:
                 kwargs[k] = providers[v]
-        print(args)
-        print(kwargs)
+
         return func(*args, **kwargs)
 
     return wrapper
 
 
+def inject(func):
+    # from base_policy.base_policy_impl import BasePricingImpl
+    # from base_policy.base_policy_interface import BasePricing
 
+    providers = {
+        # BasePricing  : BasePricingImpl,
+    }
 
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        annotations = inspect.getfullargspec(func).annotations
+        for k, v in annotations.items():
+            if v in providers:
+                kwargs[k] = providers[v]
 
-# if __name__ == '__main__':
-#     usecase = Usecase(11)
-#     print(usecase)
-#     print(usecase.age)
-#     print(usecase.repo)
-#     usecase.repo.get(usecase)
+        return func(*args, **kwargs)
+
+    return wrapper

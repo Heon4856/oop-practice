@@ -1,8 +1,12 @@
 from datetime import datetime
 from typing import List
 
+class Base_charge:
+    user_id: int
+    base_pricing: int
 
 class User:
+    user_id : int
     use_deer_name: str
     use_end_lat: float
     use_end_lng: float

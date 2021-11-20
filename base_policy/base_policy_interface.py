@@ -4,9 +4,6 @@ from abc import ABC, abstractmethod
 
 class BasePricing(ABC):
 
-    def __init__(self):
-        self._basic_rate=0
-        self._per_minute_rate=0
     @property
     def basic_rate(self):
         return self._basic_rate
@@ -23,6 +20,10 @@ class BasePricing(ABC):
     def per_minute_rate(self, new_per_minute_rate: int):
         self._per_minute_rate =new_per_minute_rate
 
+
+    @abstractmethod
+    def base_price_setting(self):
+        pass
 
     @abstractmethod
     def calculate_fee(self, minute):
