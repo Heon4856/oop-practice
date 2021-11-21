@@ -2,7 +2,7 @@ from const import EXCEIPTION_TIMEDELTA
 from exception_policy.exception_policy_interface import BaseException
 from dto import User
 
-class QuickReturnPolicy(BaseException):
+class QuickReturnException(BaseException):
 
     def calculate_exception_change_amount(self,user:User, before_fare: int):
         return before_fare

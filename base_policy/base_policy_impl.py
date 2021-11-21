@@ -7,7 +7,7 @@ from const import base_policy_const
 from mock_db import find_base_pricing
 
 
-class BasePricingImpl(BasePricing):
+class BasePricingImplement(BasePricing):
 
     def base_price_setting(self, deer_area_id: int):
         self.basic_rate = base_policy_const[deer_area_id]["basic_rate"]

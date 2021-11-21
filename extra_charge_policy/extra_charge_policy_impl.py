@@ -6,7 +6,7 @@ from utils import calculate_distance
 from dto import User
 
 
-class OutsideDistrict(BaseExtraCharge):
+class OutsideDistrictExtraCharge(BaseExtraCharge):
     def calculate_extra_charge_amount(self, user: User):
         coords = (user.use_end_lat, user.use_end_lng)
         deer: Deer = find_deer_info(user.use_deer_name)
@@ -27,7 +27,7 @@ class OutsideDistrict(BaseExtraCharge):
         return False
 
 
-class AtForbiddenDistrict:
+class ForbiddenDistrictExtraCharge(BaseExtraCharge):
     def calculate_extra_charge_amount(self):
         return FORBIDDEN_DISTRICT_CHARGE
 
